@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML-документ</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .images-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .images-container img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .xml-document {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="xml-document">
+        <h1>XML Schema</h1>
+<pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Tournament xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="tournament.xsd" name="Open Championship" 
+date="2024-11-05">
+    &lt;Player id="1" ranking="2200">
+        &lt;Name>Іван Іванов&lt;/Name>
+        &lt;Country>Україна&lt;/Country>
+    &lt;/Player>
+    &lt;Player id="2" ranking="2400">
+        &lt;Name>Петро Петров&lt;/Name>
+        &lt;Country>Україна&lt;/Country>
+    &lt;/Player>
+    &lt;Match id="M1" round="1">
+        &lt;WhitePlayer>1&lt;/WhitePlayer>
+        &lt;BlackPlayer>2&lt;/BlackPlayer>
+        &lt;Result>1-0&lt;/Result>
+    &lt;/Match>
+&lt;/Tournament>
+   
+</pre>
+
+<pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+        &lt;xs:element name="Tournament">
+            &lt;xs:complexType>
+                &lt;xs:sequence>
+                    &lt;xs:element name="Player" maxOccurs="unbounded">
+                        &lt;xs:complexType>
+                            &lt;xs:sequence>
+                                &lt;xs:element name="Name" type="xs:string"/>
+                                &lt;xs:element name="Country" type="xs:string"/>
+                            &lt;/xs:sequence>
+                            &lt;xs:attribute name="id" type="xs:ID" use="required"/>
+                            &lt;xs:attribute name="ranking" type="xs:integer" use="optional"/>
+                        &lt;/xs:complexType>
+                    &lt;/xs:element>
+                    &lt;xs:element name="Match" minOccurs="0" maxOccurs="unbounded">
+                        &lt;xs:complexType>
+                            &lt;xs:sequence>
+                                &lt;xs:element name="WhitePlayer" type="xs:string"/>
+                                &lt;xs:element name="BlackPlayer" type="xs:string"/>
+                                &lt;xs:element name="Result" type="xs:string"/>
+                            &lt;/xs:sequence>
+                            &lt;xs:attribute name="id" type="xs:ID" use="required"/>
+                            &lt;xs:attribute name="round" type="xs:integer" use="optional"/>
+                        &lt;/xs:complexType>
+                    &lt;/xs:element>
+                &lt;/xs:sequence>
+                &lt;xs:attribute name="name" type="xs:string" use="required"/>
+                &lt;xs:attribute name="date" type="xs:date" use="optional"/>
+            &lt;/xs:complexType>
+        &lt;/xs:element>
+
+    &lt;/xs:schema>
+</pre>
+<h1>DTD-схема</h1>
+<pre>
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;!DOCTYPE note[
+    &lt;!ELEMENT Tournament (Player+, Match*)>
+&lt;!ATTLIST Tournament
+    name CDATA #REQUIRED
+    date CDATA #IMPLIED>
+
+    &lt;!ELEMENT Player (Name, Country)>
+    &lt;!ATTLIST Player
+    id ID #REQUIRED
+    ranking CDATA #IMPLIED>
+
+    &lt;!ELEMENT Name (#PCDATA)>
+    &lt;!ELEMENT Country (#PCDATA)>
+
+    &lt;!ELEMENT Match (WhitePlayer, BlackPlayer, Result)>
+    &lt;!ATTLIST Match
+    id ID #REQUIRED
+    round CDATA #IMPLIED>
+
+    &lt;!ELEMENT WhitePlayer (#PCDATA)>
+    &lt;!ELEMENT BlackPlayer (#PCDATA)>
+    &lt;!ELEMENT Result (#PCDATA)>
+]>
+&lt;Tournament name="Open Championship" date="2024-11-05">
+    &lt;Player id="1" ranking="2200">
+        &lt;Name>Іван Іванов&lt;/Name>
+        &lt;Country>Україна&lt;/Country>
+    &lt;/Player>
+    &lt;Player id="2" ranking="2400">
+        &lt;Name>Петро Петров&lt;/Name>
+        &lt;Country>Україна&lt;/Country>
+    &lt;/Player>
+    &lt;Match id="M1" round="1">
+        &lt;WhitePlayer>1&lt;/WhitePlayer>
+        &lt;BlackPlayer>2&lt;/BlackPlayer>
+        &lt;Result>1-0&lt;/Result>
+    &lt;/Match>
+&lt;/Tournament>
+
+
+</pre>
+
+    </div>
+</body>
+</html>
